@@ -33,8 +33,6 @@ def Dbquery(conn,sql) :
 #백업을 복원할 Jobid 들을 찾아서 반환 (Jobid는 여러개)
 def Getjobid(client,date) :
         query = "SELECT JobId FROM Job WHERE ClientId=(SELECT ClientId FROM Client WHERE NAME='%s') AND name='%s_daily' AND (JobStatus='T' OR JobStatus='W') AND type='B' AND EndTime::text LIKE '%%%s%%'" %(client,client,date)
-        #query = "SELECT JobId FROM Job WHERE ClientId=(SELECT ClientId FROM Client WHERE NAME='rescue3-97') AND name='rescue3-97_daily' AND (JobStatus='T' OR JobStatus='W') AND type='B' AND EndTime::text LIKE '%2020-03-20%'"
-        #print(query)
         result = Dbquery(conn,query)
         #tuple
         jobid = result[0]
