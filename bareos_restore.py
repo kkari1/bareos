@@ -20,7 +20,7 @@ conn = psycopg2.connect(conn_string)
 #테스트로 넣은 값들
 client = '[LOCALHOST]'
 date = '2020-11-09'
-oracle_db = '/www/kkari_net'
+data_dir = '/www/kkari_net'
 
 #DB쿼리 결과를 반환
 def Dbquery(conn,sql) :
@@ -49,9 +49,9 @@ def Getjobid(client,date) :
         return jobid
 
 #고객 백업파일 디렉토리id를 찾아서 반환
-def FindBackup(jobid,oracle_db) :
-        oracle_db = oracle_db  + "/"
-        api_string = ".bvfs_lsdirs jobid=%s path=%s" %(jobid,oracle_db)
+def FindBackup(jobid,data_dir) :
+        data_dir = data_dir  + "/"
+        api_string = ".bvfs_lsdirs jobid=%s path=%s" %(jobid,data_dir)
         result = directorconsole.call(api_string)
         for list in result.values() :
                 for path in list :
@@ -80,7 +80,7 @@ def DeleteTable(tablepath) :
 
 def main() :
         jobid = Getjobid(client,date)
-        pathid = FindBackup(jobid,oracle_db)
+        pathid = FindBackup(jobid,data_dir)
         RestoreBackup(tablepath,client)
         DeleteTable(tablepath)
 
